@@ -1,32 +1,51 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="./static/mywebscript.js"></script>
-    <style>
-        .center-heading {
-            text-align: center;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="card">
-        <div class="card-body">
-            <h1 class="center-heading">NLP - Emotion Detection</h1> 
-            <div style="padding: 25px 25px 25px 25px;">
-            <h2 class="mb-3">
-                <label class="form-label">Please enter the text to be analyzed</label>
-                <input type="textarea" class="form-control" id="textToAnalyze">
-            </h2>
+    <main class="container">
+        <header>
+            <p class="eyebrow">CUSTOMER FEEDBACK ANALYTICS</p>
+            <h1>Emotion Detector</h1>
+            <p class="intro">Enter a customer comment to identify the emotions expressed.</p>
+        </header>
 
-            <div style="padding: 25px 25px 25px 25px;">
-                <button onclick="RunSentimentAnalysis()" class="btn btn-secondary">Run Sentiment Analysis</button>
-            </div>
-            <div style="padding: 25px 25px 25px 25px;"></div>
-            <h2 class="mb-3">
-                <label class="form-label">Result of Emotion Detection</label>
-            </h2>
+        <form id="emotion-form" action="/emotionDetector" method="get">
+            <label for="feedback">Customer feedback</label>
+            <textarea id="feedback" name="textToAnalyze" rows="5"
+                placeholder="For example: I am really happy with this product..."
+                aria-describedby="form-error">{{ submitted_text|default('') }}</textarea>
+            <p id="client-error" class="error" role="alert" hidden>
+                Please enter text to analyze.
+            </p>
+            {% if error %}
+                <p id="form-error" class="error" role="alert">{{ error }}</p>
+            {% endif %}
+            <button type="submit">Analyze emotion</button>
+        </form>
 
-            <div id="system_response" style="padding: 25px 25px 25px 25px;"></div>
-        </div>
-    </div>
+        {% if result %}
+            <section class="results" aria-live="polite">
+                <h2>Analysis results</h2>
+                <p class="dominant">Dominant emotion:
+                    <strong>{{ result.dominant_emotion|capitalize }}</strong>
+                </p>
+                <ul class="scores">
+                    {% for emotion in ['anger', 'disgust', 'fear', 'joy', 'sadness'] %}
+                        <li>
+                            <span>{{ emotion|capitalize }}</span>
+                            <strong>{{ '%.4f'|format(result[emotion]) }}</strong>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
+        {% endif %}
+        <footer>Powered by the Watson NLP EmotionPredict service</footer>
+    </main>
+    <script src="{{ url_for('static', filename='mywebscript.js') }}"></script>
 </body>
+</html>

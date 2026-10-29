@@ -1,12 +1,24 @@
-let RunSentimentAnalysis = ()=>{
-    textToAnalyze = document.getElementById("textToAnalyze").value;
+/* Client-side validation for the Emotion Detector form. */
+"use strict";
 
-    let xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("system_response").innerHTML = xhttp.responseText;
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("emotion-form");
+    const input = document.getElementById("feedback");
+    const error = document.getElementById("client-error");
+
+    form.addEventListener("submit", (event) => {
+        if (!input.value.trim()) {
+            event.preventDefault();
+            error.hidden = false;
+            input.focus();
+            return;
         }
-    };
-    xhttp.open("GET", "emotionDetector?textToAnalyze"+"="+textToAnalyze, true);
-    xhttp.send();
-}
+        error.hidden = true;
+    });
+
+    input.addEventListener("input", () => {
+        if (input.value.trim()) {
+            error.hidden = true;
+        }
+    });
+});
