@@ -42,7 +42,7 @@ oaqjp-final-project-emb-ai/
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/YOUR_USERNAME/oaqjp-final-project-emb-ai.git
+   git clone https://github.com/KaustubhKulkarni-cmd/oaqjp-final-project-emb-ai.git
    cd oaqjp-final-project-emb-ai
    ```
 
