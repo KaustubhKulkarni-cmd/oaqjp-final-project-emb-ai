@@ -61,12 +61,4 @@ python3 -c "from EmotionDetection.emotion_detection import emotion_detector; pri
 python3 -m pylint server.py
 ```
 
-## Coursera submission notes
-The assignment requires real terminal output and two screenshots. Run the commands in the Coursera lab and paste the actual terminal output into the corresponding assessment fields. Capture:
-- `6b_deployment_test.png`: the running interface with submitted text and visible results.
-- `7c_error_handling_interface.png`: the interface showing the blank-input validation message.
 
-Do not submit example or fabricated terminal output as if it were captured from a real run.
-
-## Original starter repository
-https://github.com/ibm-developer-skills-network/oaqjp-final-project-emb-ai
